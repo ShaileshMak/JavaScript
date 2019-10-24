@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import "./ToDoList.css";
-import ToDo from '../ToDo/ToDo';
+import ToDo from '../toDo/ToDo';
 import NewToDo from '../newToDo/NewToDo';
 
 class ToDoList extends Component {
