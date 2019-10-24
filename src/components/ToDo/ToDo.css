@@ -1,0 +1,40 @@
+.toDo-container {
+    padding: 20px;
+    border-bottom: 1px dotted gray;
+    width: 80%;
+    overflow: hidden;
+}
+.toDo-done {
+    text-decoration: line-through;
+}
+.target-date {
+    font-size: 15px;
+    color: orange;
+    text-align: right;
+    padding-right: 5px;
+    float: right;
+}
+.toDo-label {
+    font-size: 25px;
+    padding-left: 20px;
+    vertical-align: middle;
+    color: darkgray;
+}
+.toDo-checkbox {
+    transform: scale(3);
+    -ms-transform: scale(3);
+    -webkit-transform: scale(3);
+    padding: 10px;
+}
+.delete-button {
+    float: right;   
+    background-color: white;
+    border-radius: 5px;
+    font-size: 15px;
+    color: gray;
+    padding: 10px;
+}
+
+.delete-button:focus{
+    outline: none;
+  }
