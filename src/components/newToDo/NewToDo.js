@@ -36,13 +36,13 @@ class NewToDo extends Component {
             <form autoComplete="off" onSubmit={this.handleSaveClick}>
                 <div className="form-field-container">
                     <label>
-                        <span class="label-span">To Do : </span>
+                        <span className="label-span">To Do : </span>
                         <input className="toDo-input" type="text" name="newToDo" onChange={this.handleToDoChange}/>
                     </label>
                 </div>
                 <div className="form-field-container">
                     <label>
-                        <span class="label-span">Target Date : </span>
+                        <span className="label-span">Target Date : </span>
                         <input className="toDo-target-date" type="date" onChange={this.handleToDoTargetDateChange}></input>
                     </label>
                 </div>
