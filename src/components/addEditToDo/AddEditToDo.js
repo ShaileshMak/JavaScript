@@ -1,16 +1,27 @@
 import React, { Component } from 'react';
-import "./NewToDo.css";
+import "./AddEditToDo.css";
 import { connect } from 'react-redux';
-import { addToDo, getToDosStatusCount } from '../../actions/todoActions';
+import { addToDo, editedToDo, getToDosStatusCount } from '../../actions/todoActions';
 import PropTypes from 'prop-types'
 
-class NewToDo extends Component {
+class AddEditToDo extends Component {
     constructor(props) {
         super(props)
 
         this.state = {
             toDoValue: '',
-            targetDate: this.getDate() 
+            targetDate: this.getDate()
+        }
+    }
+
+    componentDidMount() {
+        if(this.props.todo.showEditToDo) {
+            const id = this.props.todo.idOfEdit;
+            const todoToEdit = this.props.todo.toDoList.filter(toDo => toDo.id === id)[0];
+            this.setState( {
+                toDoValue: todoToEdit.name,
+                targetDate: todoToEdit.targetDate
+            })
         }
     }
     
@@ -29,11 +40,14 @@ class NewToDo extends Component {
 
     onSubmit = (event) =>  {
         event.preventDefault();
+        const isEditFlow = this.props.todo.showEditToDo
         const toDoData = {
             toDoValue: this.state.toDoValue,
             targetDate: this.state.targetDate,
         };
-        this.props.addToDo(toDoData);
+        isEditFlow ? 
+            this.props.editedToDo(toDoData): 
+            this.props.addToDo(toDoData);
         this.props.getToDosStatusCount();
     }
 
@@ -58,8 +72,9 @@ class NewToDo extends Component {
     }
 }
 
-NewToDo.propTypes = {
+AddEditToDo.propTypes = {
     addToDo: PropTypes.func.isRequired,
+    editedToDo: PropTypes.func.isRequired,
     getToDosStatusCount: PropTypes.func.isRequired,
     todo: PropTypes.object.isRequired
 }
@@ -71,6 +86,7 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, 
     { 
         addToDo,
+        editedToDo,
         getToDosStatusCount
     }
-)(NewToDo)
+)(AddEditToDo)

@@ -36,6 +36,7 @@
     font-size: 15px;
     color: gray;
     padding: 10px;
+    margin-right: 5px;
 }
 
 .delete-button:focus{

@@ -1,4 +1,4 @@
-import {GET_TODOS, GET_TODOS_STATUS_COUNT, SHOW_TODOS_STATUS_COUNT, NEW_TODO, ADD_TODO, DELETE_TODO, MARK_DONE_TODO} from './types';
+import {GET_TODOS, GET_TODOS_STATUS_COUNT, SHOW_TODOS_STATUS_COUNT, NEW_TODO, ADD_TODO, DELETE_TODO, EDIT_TODO, EDITED_TODO, MARK_DONE_TODO} from './types';
 
 export const getTodos = () => {
     return {
@@ -35,6 +35,20 @@ export const deleteToDo = (id) => {
     return {
         type: DELETE_TODO,
         payLoad: id
+    }
+}
+
+export const editToDo = (id) => {
+    return {
+        type: EDIT_TODO,
+        payLoad: id
+    }
+}
+
+export const editedToDo = (data) => {
+    return {
+        type: EDITED_TODO,
+        payLoad: data
     }
 }
 

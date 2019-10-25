@@ -1,4 +1,4 @@
-import {GET_TODOS, GET_TODOS_STATUS_COUNT, SHOW_TODOS_STATUS_COUNT, NEW_TODO, ADD_TODO, DELETE_TODO, MARK_DONE_TODO} from '../actions/types';
+import {GET_TODOS, GET_TODOS_STATUS_COUNT, SHOW_TODOS_STATUS_COUNT, NEW_TODO, ADD_TODO, DELETE_TODO, EDIT_TODO, EDITED_TODO, MARK_DONE_TODO} from '../actions/types';
 import uuid from 'uuid';
 import { utilities } from '../utilities/utils';
 
@@ -6,13 +6,15 @@ const initialToDoList = [
     {name: 'Todo 1', id: uuid(), targetDate: '2019-10-30', checked: false},
     {name: 'Todo 2', id: uuid(), targetDate: '2019-10-31', checked: true},
     {name: 'Todo 3', id: uuid(), targetDate: '2019-10-28', checked: true},
-    {name: 'Movie Show', id: uuid(), targetDate: '2019-11-2', checked: false}
+    {name: 'Movie Show', id: uuid(), targetDate: '2019-11-02', checked: false}
 ];
 const initialState = {
     toDoList: initialToDoList,
     showNewToDo: false,
+    showEditToDo: false,
     toDoStatusCount: getToDosStatusCount(),
-    showStatus: false
+    showStatus: false,
+    idOfEdit: -1
 }
 
 function getToDosStatusCount(toDoList = initialToDoList) {
@@ -44,7 +46,7 @@ export default function(state = initialState, action) {
         case NEW_TODO: 
             return {
                 ...state,
-                showNewToDo: true
+                showNewToDo: true,
             }
         case ADD_TODO: 
             const newToDo = [{
@@ -56,17 +58,37 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 toDoList: [...state.toDoList, ...newToDo],
-                showNewToDo: false
+                showNewToDo: false,
+                showEditToDo: false,
+                idOfEdit: -1
             }
         case DELETE_TODO:
             return {
                 ...state,
                 toDoList: state.toDoList.filter(toDo => toDo.id !== action.payLoad)
             }
+        case EDIT_TODO:
+            return {
+                ...state,
+                showEditToDo: true,
+                idOfEdit: action.payLoad
+            }
+        case EDITED_TODO:
+            const index = state.toDoList.findIndex(todo => todo.id === state.idOfEdit);
+            const editedToDo = state.toDoList[index];
+            editedToDo.name = action.payLoad.toDoValue;
+            editedToDo.targetDate = action.payLoad.targetDate;
+            
+            state.toDoList[index] = editedToDo;
+            return {
+                ...state,
+                showNewToDo: false,
+                showEditToDo: false
+            }
         case MARK_DONE_TODO: 
             return {
                 ...state,
-                toDoList: state.toDoList.map((todo, id) => ({
+                toDoList: state.toDoList.map((todo) => ({
                     ...todo, 
                     checked: action.payLoad === todo.id ? !todo.checked : todo.checked 
                 }))
