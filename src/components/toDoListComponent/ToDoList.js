@@ -8,7 +8,12 @@ class ToDoList extends Component {
         super(props)
 
         this.state = {
-            toDoList: [],
+            toDoList: [
+                {name: 'Todo 1', index: 0, targetDate: '2019-10-30', checked: false},
+                {name: 'Todo 2', index: 1, targetDate: '2019-10-31', checked: true},
+                {name: 'Todo 3', index: 2, targetDate: '2019-10-28', checked: true},
+                {name: 'Todo 4', index: 3, targetDate: '2019-11-2', checked: false}
+            ],
             showNewToDo: false
         }
     }
@@ -16,7 +21,6 @@ class ToDoList extends Component {
     addToDo = (toDoData) => {
         const newToDoList = this.state.toDoList;
         const length = newToDoList.length;
-
         newToDoList.push({
             name: toDoData.toDoValue,
             targetDate: toDoData.targetDate,
@@ -27,6 +31,13 @@ class ToDoList extends Component {
         this.setState({
             toDoList: newToDoList,
             showNewToDo: false
+        })
+    }
+
+    onChange = (selectedIndex) => {
+        const newToDoList = this.state.toDoList.map((todo, index) => ({...todo, checked: selectedIndex === index ? !todo.checked : todo.checked }));
+        this.setState({
+            toDoList: newToDoList
         })
     }
 
@@ -65,6 +76,7 @@ class ToDoList extends Component {
                     index={toDo.index}
                     targetDate = {toDo.targetDate}
                     checked={toDo.checked}
+                    onChange={this.onChange}
                     deleteToDo={this.deleteToDo}
                     >
                 </ToDo>
