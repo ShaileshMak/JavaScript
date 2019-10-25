@@ -2,24 +2,9 @@ import React, { Component } from 'react';
 import "./ToDo.css"
 
 class ToDo extends Component {
-    constructor(props) {
-        super(props)
-
-        this.state = {
-            checked: false
-        }
-    }
-
-    handleChange = () => {
-        this.setState(
-            {
-                checked: !this.state.checked
-            }
-        )
-    }
 
     isToDoDoneClass = () => {
-        return "toDo-label"  + (this.state.checked ? ' toDo-done' : '')
+        return "toDo-label"  + (this.props.checked ? ' toDo-done' : '')
     }
 
     render() {
@@ -27,7 +12,7 @@ class ToDo extends Component {
             <div className="toDo-container">
                 <div>
                     <label>
-                        <input className="toDo-checkbox" type="checkbox" name={`toDo_${this.props.index}`} checked={this.state.checked} onChange={this.handleChange} />
+                        <input className="toDo-checkbox" type="checkbox" name={`toDo_${this.props.index}`} checked={this.props.checked} onChange={() => this.props.onChange(this.props.index)} />
                         <span className={this.isToDoDoneClass()}>{this.props.name}</span>
                     </label>
                     <span className="target-date">{`(Target Date:- ${this.props.targetDate})`}</span>
