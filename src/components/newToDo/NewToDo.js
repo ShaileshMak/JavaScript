@@ -10,8 +10,15 @@ class NewToDo extends Component {
 
         this.state = {
             toDoValue: '',
-            targetDate: ''  
+            targetDate: this.getDate() 
         }
+    }
+    
+    getDate = (date = new Date()) => {
+        let dateString = new Date(date.getTime() - (date.getTimezoneOffset() * 60000 ))
+                    .toISOString()
+                    .split("T")[0]
+        return dateString;    
     }
 
     onChange = (event) => {
@@ -35,13 +42,13 @@ class NewToDo extends Component {
                 <div className="form-field-container">
                     <label>
                         <span className="label-span">To Do : </span>
-                        <input className="toDo-input" type="text" name="toDoValue" onChange={this.onChange}/>
+                        <input className="toDo-input" type="text" name="toDoValue" onChange={this.onChange} value={this.state.toDoValue} />
                     </label>
                 </div>
                 <div className="form-field-container">
                     <label>
                         <span className="label-span">Target Date : </span>
-                        <input className="toDo-target-date" type="date" name="toDoDate" onChange={this.onChange}></input>
+                        <input className="toDo-target-date" type="date" name="targetDate" onChange={this.onChange} value={this.state.targetDate}></input>
                     </label>
                 </div>
                 <button className="save-button" type="submit">Save</button>

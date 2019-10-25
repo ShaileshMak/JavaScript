@@ -4,7 +4,20 @@ import "./ToDo.css"
 class ToDo extends Component {
 
     isToDoDoneClass = () => {
-        return "toDo-label"  + (this.props.checked ? ' toDo-done' : '')
+        let classes = "toDo-label"  + (this.props.checked ? ' toDo-done' : '')
+        classes = this.isPastDue() ? `${classes} over-due-todo` : classes;
+        return classes
+    }
+
+    isPastDue = () => {
+        if(this.props.checked) {
+            return false;
+        }
+        const targetDate = new Date(this.props.targetDate);
+        const today = new Date();
+        today.setDate(today.getDate() - 1);
+
+        return targetDate < today;
     }
 
     render() {
@@ -12,13 +25,13 @@ class ToDo extends Component {
             <div className="toDo-container">
                 <div>
                     <label>
-                        <input className="toDo-checkbox" type="checkbox" name={`toDo_${this.props.index}`} checked={this.props.checked} onChange={() => this.props.onChange(this.props.index)} />
+                        <input className="toDo-checkbox" type="checkbox" name={`toDo_${this.props.id}`} checked={this.props.checked} onChange={() => this.props.onChange(this.props.id)} />
                         <span className={this.isToDoDoneClass()}>{this.props.name}</span>
                     </label>
-                    <span className="target-date">{`(Target Date:- ${this.props.targetDate})`}</span>
+                    <span className={`target-date ${this.isPastDue() ? ' over-due-todo' : ''}`}>{`(Target Date:- ${this.props.targetDate} ${this.isPastDue() ? ' [OVER DUE] ' : ''})`}</span>
                 </div>
                 <div>
-                    <button className="delete-button" onClick={() => this.props.deleteToDo(this.props.index)}>Delete</button>
+                    <button className="delete-button" onClick={() => this.props.deleteToDo(this.props.id)}>Delete</button>
                 </div>
             </div>
         )

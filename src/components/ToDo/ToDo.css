@@ -7,6 +7,9 @@
 .toDo-done {
     text-decoration: line-through;
 }
+.over-due-todo {
+    color: red !important;
+}
 .target-date {
     font-size: 15px;
     color: orange;
@@ -37,4 +40,4 @@
 
 .delete-button:focus{
     outline: none;
-  }
+}

@@ -19,17 +19,17 @@ export const addToDo = (data) => {
     }
 }
 
-export const deleteToDo = (index) => {
+export const deleteToDo = (id) => {
     return {
         type: DELETE_TODO,
-        payLoad: index
+        payLoad: id
     }
 }
 
-export const markToDoDone = (index) => {
+export const markToDoDone = (id) => {
     return {
         type: MARK_DONE_TODO,
-        payLoad: index
+        payLoad: id
     }
 }
 

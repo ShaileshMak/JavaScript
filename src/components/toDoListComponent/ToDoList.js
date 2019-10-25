@@ -11,12 +11,12 @@ class ToDoList extends Component {
         this.props.getTodos();
     }
 
-    onChange = (index) => {
-        this.props.markToDoDone(index);
+    onChange = (id) => {
+        this.props.markToDoDone(id);
     }
 
-    deleteToDo = (index) => {
-        this.props.deleteToDo(index);
+    deleteToDo = (id) => {
+        this.props.deleteToDo(id);
     }
 
     showNewToDoForm = () => {
@@ -42,13 +42,13 @@ class ToDoList extends Component {
         const neweList = this.props.todo.toDoList.map((toDo) => {
             return (
                 <ToDo 
-                    key={`todo_${toDo.index}`}
-                    name={toDo.name}
-                    index={toDo.index}
+                    key={`todo_${toDo.id}`}
+                    name={`${toDo.name}`}
+                    id={toDo.id}
                     targetDate = {toDo.targetDate}
                     checked={toDo.checked}
-                    onChange={this.onChange}
-                    deleteToDo={this.deleteToDo}
+                    onChange={this.onChange.bind(this,toDo.id)}
+                    deleteToDo={this.deleteToDo.bind(this,toDo.id)}
                     >
                 </ToDo>
             )

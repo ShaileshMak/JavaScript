@@ -1,11 +1,12 @@
-import {GET_TODOS, NEW_TODO, ADD_TODO, DELETE_TODO, MARK_DONE_TODO} from '../actions/types'
+import {GET_TODOS, NEW_TODO, ADD_TODO, DELETE_TODO, MARK_DONE_TODO} from '../actions/types';
+import uuid from 'uuid';
 
 const initialState = {
     toDoList: [
-        {name: 'Todo 1', index: 0, targetDate: '2019-10-30', checked: false},
-        {name: 'Todo 2', index: 1, targetDate: '2019-10-31', checked: true},
-        {name: 'Todo 3', index: 2, targetDate: '2019-10-28', checked: true},
-        {name: 'Movie Show', index: 3, targetDate: '2019-11-2', checked: false}
+        {name: 'Todo 1', id: uuid(), targetDate: '2019-10-30', checked: false},
+        {name: 'Todo 2', id: uuid(), targetDate: '2019-10-31', checked: true},
+        {name: 'Todo 3', id: uuid(), targetDate: '2019-10-28', checked: true},
+        {name: 'Movie Show', id: uuid(), targetDate: '2019-11-2', checked: false}
     ],
     showNewToDo: false
 }
@@ -25,7 +26,7 @@ export default function(state = initialState, action) {
             const newToDo = [{
                 name: action.payLoad.toDoValue,
                 targetDate: action.payLoad.targetDate,
-                index: state.toDoList.length,
+                id: uuid(),
                 checked: false,
             }];
             return {
@@ -36,14 +37,14 @@ export default function(state = initialState, action) {
         case DELETE_TODO:
             return {
                 ...state,
-                toDoList: state.toDoList.filter(toDo => toDo.index !== action.payLoad)
+                toDoList: state.toDoList.filter(toDo => toDo.id !== action.payLoad)
             }
         case MARK_DONE_TODO: 
             return {
                 ...state,
-                toDoList: state.toDoList.map((todo, index) => ({
+                toDoList: state.toDoList.map((todo, id) => ({
                     ...todo, 
-                    checked: action.payLoad === index ? !todo.checked : todo.checked 
+                    checked: action.payLoad === todo.id ? !todo.checked : todo.checked 
                 }))
             }
         default:
