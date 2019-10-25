@@ -2,58 +2,29 @@ import React, { Component } from 'react';
 import "./ToDoList.css";
 import ToDo from '../toDo/ToDo';
 import NewToDo from '../newToDo/NewToDo';
+import { connect } from 'react-redux';
+import { getTodos, showNewToDoForm, deleteToDo, markToDoDone } from '../../actions/todoActions';
+import PropTypes from 'prop-types'
 
 class ToDoList extends Component {
-    constructor(props) {
-        super(props)
-
-        this.state = {
-            toDoList: [
-                {name: 'Todo 1', index: 0, targetDate: '2019-10-30', checked: false},
-                {name: 'Todo 2', index: 1, targetDate: '2019-10-31', checked: true},
-                {name: 'Todo 3', index: 2, targetDate: '2019-10-28', checked: true},
-                {name: 'Todo 4', index: 3, targetDate: '2019-11-2', checked: false}
-            ],
-            showNewToDo: false
-        }
+    componentDidMount() {
+        this.props.getTodos();
     }
 
-    addToDo = (toDoData) => {
-        const newToDoList = this.state.toDoList;
-        const length = newToDoList.length;
-        newToDoList.push({
-            name: toDoData.toDoValue,
-            targetDate: toDoData.targetDate,
-            index: length,
-            checked: false,
-        });
-
-        this.setState({
-            toDoList: newToDoList,
-            showNewToDo: false
-        })
-    }
-
-    onChange = (selectedIndex) => {
-        const newToDoList = this.state.toDoList.map((todo, index) => ({...todo, checked: selectedIndex === index ? !todo.checked : todo.checked }));
-        this.setState({
-            toDoList: newToDoList
-        })
+    onChange = (index) => {
+        this.props.markToDoDone(index);
     }
 
     deleteToDo = (index) => {
-        const newToDoList = this.state.toDoList.filter(toDo => toDo.index !== index);
-        this.setState({
-            toDoList: newToDoList
-        })
+        this.props.deleteToDo(index);
     }
 
     showNewToDoForm = () => {
-        this.setState({showNewToDo: true});
+        this.props.showNewToDoForm();
     }
 
     renderNewInput = () => {
-        if(this.state.showNewToDo){
+        if(this.props.todo.showNewToDo){
             return<NewToDo addToDo={this.addToDo}/> 
         } else {
             return (
@@ -61,14 +32,14 @@ class ToDoList extends Component {
                     className="add-button" 
                     onClick={this.showNewToDoForm}
                 >
-                    Add To Do 
+                    New To Do 
                 </button>
             )
         }
     }
     
     getToDoComp = () => {
-        const neweList = this.state.toDoList.map((toDo, index) => {
+        const neweList = this.props.todo.toDoList.map((toDo) => {
             return (
                 <ToDo 
                     key={`todo_${toDo.index}`}
@@ -96,6 +67,26 @@ class ToDoList extends Component {
             </div>
         )
     }
-}
+};
 
-export default ToDoList
+ToDoList.propTypes = {
+    getTodos: PropTypes.func.isRequired,
+    showNewToDoForm: PropTypes.func.isRequired,
+    deleteToDo: PropTypes.func.isRequired,
+    markToDoDone: PropTypes.func.isRequired,
+    todo: PropTypes.object.isRequired
+};
+
+const mapStateToProps = (state) => ({
+    todo: state.todo
+});
+
+export default connect(
+    mapStateToProps, 
+    { 
+        getTodos,  
+        showNewToDoForm,
+        deleteToDo,
+        markToDoDone
+    }
+)(ToDoList);
