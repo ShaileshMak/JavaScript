@@ -3,7 +3,7 @@ import "./ToDoList.css";
 import ToDo from '../toDo/ToDo';
 import NewToDo from '../newToDo/NewToDo';
 import { connect } from 'react-redux';
-import { getTodos, showNewToDoForm, deleteToDo, markToDoDone } from '../../actions/todoActions';
+import { getTodos, showNewToDoForm, deleteToDo, markToDoDone, getToDosStatusCount } from '../../actions/todoActions';
 import PropTypes from 'prop-types'
 
 class ToDoList extends Component {
@@ -13,10 +13,12 @@ class ToDoList extends Component {
 
     onChange = (id) => {
         this.props.markToDoDone(id);
+        this.props.getToDosStatusCount();
     }
 
     deleteToDo = (id) => {
         this.props.deleteToDo(id);
+        this.props.getToDosStatusCount();
     }
 
     showNewToDoForm = () => {
@@ -74,6 +76,7 @@ ToDoList.propTypes = {
     showNewToDoForm: PropTypes.func.isRequired,
     deleteToDo: PropTypes.func.isRequired,
     markToDoDone: PropTypes.func.isRequired,
+    getToDosStatusCount: PropTypes.func.isRequired,
     todo: PropTypes.object.isRequired
 };
 
@@ -87,6 +90,7 @@ export default connect(
         getTodos,  
         showNewToDoForm,
         deleteToDo,
-        markToDoDone
+        markToDoDone,
+        getToDosStatusCount
     }
 )(ToDoList);

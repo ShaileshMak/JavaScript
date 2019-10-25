@@ -28,7 +28,7 @@ class ToDo extends Component {
                         <input className="toDo-checkbox" type="checkbox" name={`toDo_${this.props.id}`} checked={this.props.checked} onChange={() => this.props.onChange(this.props.id)} />
                         <span className={this.isToDoDoneClass()}>{this.props.name}</span>
                     </label>
-                    <span className={`target-date ${this.isPastDue() ? ' over-due-todo' : ''}`}>{`(Target Date:- ${this.props.targetDate} ${this.isPastDue() ? ' [OVER DUE] ' : ''})`}</span>
+                    <span className={`target-date ${this.isPastDue() ? ' over-due-todo' : ''}`}>{`(Target Date:- ${this.props.targetDate} ${this.isPastDue() ? ' [OVER DUE...] ' : ''})`}</span>
                 </div>
                 <div>
                     <button className="delete-button" onClick={() => this.props.deleteToDo(this.props.id)}>Delete</button>

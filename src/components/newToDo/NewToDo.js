@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import "./NewToDo.css";
 import { connect } from 'react-redux';
-import { addToDo } from '../../actions/todoActions';
+import { addToDo, getToDosStatusCount } from '../../actions/todoActions';
 import PropTypes from 'prop-types'
 
 class NewToDo extends Component {
@@ -34,6 +34,7 @@ class NewToDo extends Component {
             targetDate: this.state.targetDate,
         };
         this.props.addToDo(toDoData);
+        this.props.getToDosStatusCount();
     }
 
     render() {
@@ -59,6 +60,7 @@ class NewToDo extends Component {
 
 NewToDo.propTypes = {
     addToDo: PropTypes.func.isRequired,
+    getToDosStatusCount: PropTypes.func.isRequired,
     todo: PropTypes.object.isRequired
 }
 
@@ -68,6 +70,7 @@ const mapStateToProps = (state) => ({
 
 export default connect(mapStateToProps, 
     { 
-        addToDo
+        addToDo,
+        getToDosStatusCount
     }
 )(NewToDo)
