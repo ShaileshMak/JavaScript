@@ -1,0 +1,25 @@
+.status {
+    font-size: 20px;
+}
+.status-totalToDos {
+    color: brown;
+}
+.status-completedToDos {
+    color: green;
+}
+.status-pendingToDos {
+    color: orange;
+}
+.status-overDueToDos {
+    color: red;
+}
+.show-hide-button {
+    background-color: white;
+    border-radius: 5px;
+    font-size: 15px;
+    color: gray;
+    padding: 10px;
+}
+.show-hide-button:focus{
+    outline: none;
+}

@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import "./NewToDo.css";
+import { connect } from 'react-redux';
+import { addToDo, getToDosStatusCount } from '../../actions/todoActions';
+import PropTypes from 'prop-types'
 
 class NewToDo extends Component {
     constructor(props) {
@@ -7,43 +10,46 @@ class NewToDo extends Component {
 
         this.state = {
             toDoValue: '',
-            targetDate: ''  
+            targetDate: this.getDate() 
         }
     }
+    
+    getDate = (date = new Date()) => {
+        let dateString = new Date(date.getTime() - (date.getTimezoneOffset() * 60000 ))
+                    .toISOString()
+                    .split("T")[0]
+        return dateString;    
+    }
 
-    handleToDoChange = (event) => {
+    onChange = (event) => {
         this.setState( {
-            toDoValue: event.target.value
+            [event.target.name]: event.target.value
         })
     }
 
-    handleToDoTargetDateChange = (event) => {
-        this.setState( {
-            targetDate: event.target.value
-        })
-    }
-
-    handleSaveClick = (event) =>  {
+    onSubmit = (event) =>  {
         event.preventDefault();
-        this.props.addToDo( {
+        const toDoData = {
             toDoValue: this.state.toDoValue,
             targetDate: this.state.targetDate,
-        })
+        };
+        this.props.addToDo(toDoData);
+        this.props.getToDosStatusCount();
     }
 
     render() {
         return (
-            <form autoComplete="off" onSubmit={this.handleSaveClick}>
+            <form autoComplete="off" onSubmit={this.onSubmit}>
                 <div className="form-field-container">
                     <label>
                         <span className="label-span">To Do : </span>
-                        <input className="toDo-input" type="text" name="newToDo" onChange={this.handleToDoChange}/>
+                        <input className="toDo-input" type="text" name="toDoValue" onChange={this.onChange} value={this.state.toDoValue} />
                     </label>
                 </div>
                 <div className="form-field-container">
                     <label>
                         <span className="label-span">Target Date : </span>
-                        <input className="toDo-target-date" type="date" onChange={this.handleToDoTargetDateChange}></input>
+                        <input className="toDo-target-date" type="date" name="targetDate" onChange={this.onChange} value={this.state.targetDate}></input>
                     </label>
                 </div>
                 <button className="save-button" type="submit">Save</button>
@@ -52,4 +58,19 @@ class NewToDo extends Component {
     }
 }
 
-export default NewToDo
+NewToDo.propTypes = {
+    addToDo: PropTypes.func.isRequired,
+    getToDosStatusCount: PropTypes.func.isRequired,
+    todo: PropTypes.object.isRequired
+}
+
+const mapStateToProps = (state) => ({
+    todo: state.todo
+})
+
+export default connect(mapStateToProps, 
+    { 
+        addToDo,
+        getToDosStatusCount
+    }
+)(NewToDo)
