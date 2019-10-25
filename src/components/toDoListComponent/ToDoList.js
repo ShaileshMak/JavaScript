@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import "./ToDoList.css";
 import ToDo from '../toDo/ToDo';
-import NewToDo from '../newToDo/NewToDo';
+import AddEditToDo from '../addEditToDo/AddEditToDo';
 import { connect } from 'react-redux';
-import { getTodos, showNewToDoForm, deleteToDo, markToDoDone, getToDosStatusCount } from '../../actions/todoActions';
+import { getTodos, showNewToDoForm, deleteToDo, editToDo, markToDoDone, getToDosStatusCount } from '../../actions/todoActions';
 import PropTypes from 'prop-types'
 
 class ToDoList extends Component {
@@ -21,13 +21,17 @@ class ToDoList extends Component {
         this.props.getToDosStatusCount();
     }
 
+    editToDo = (id) => {
+        this.props.editToDo(id);
+    }
+
     showNewToDoForm = () => {
         this.props.showNewToDoForm();
     }
 
     renderNewInput = () => {
-        if(this.props.todo.showNewToDo){
-            return<NewToDo addToDo={this.addToDo}/> 
+        if(this.props.todo.showNewToDo || this.props.todo.showEditToDo){
+            return<AddEditToDo addToDo={this.addToDo}/> 
         } else {
             return (
                 <button 
@@ -51,6 +55,7 @@ class ToDoList extends Component {
                     checked={toDo.checked}
                     onChange={this.onChange.bind(this,toDo.id)}
                     deleteToDo={this.deleteToDo.bind(this,toDo.id)}
+                    editToDo={this.editToDo.bind(this,toDo.id)}
                     >
                 </ToDo>
             )
@@ -75,6 +80,7 @@ ToDoList.propTypes = {
     getTodos: PropTypes.func.isRequired,
     showNewToDoForm: PropTypes.func.isRequired,
     deleteToDo: PropTypes.func.isRequired,
+    editToDo: PropTypes.func.isRequired,
     markToDoDone: PropTypes.func.isRequired,
     getToDosStatusCount: PropTypes.func.isRequired,
     todo: PropTypes.object.isRequired
@@ -90,6 +96,7 @@ export default connect(
         getTodos,  
         showNewToDoForm,
         deleteToDo,
+        editToDo,
         markToDoDone,
         getToDosStatusCount
     }
