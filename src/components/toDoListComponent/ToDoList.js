@@ -3,6 +3,8 @@ import "./ToDoList.css";
 import ToDo from '../toDo/ToDo';
 import AddEditToDo from '../addEditToDo/AddEditToDo';
 import { connect } from 'react-redux';
+import { utilities } from '../../utilities/utils';
+import { filterNames } from '../../utilities/constants';
 import { getTodos, showNewToDoForm, deleteToDo, editToDo, markToDoDone, getToDosStatusCount } from '../../actions/todoActions';
 import PropTypes from 'prop-types'
 
@@ -29,6 +31,19 @@ class ToDoList extends Component {
         this.props.showNewToDoForm();
     }
 
+    getFilteredToDo = () => {
+        let newToDoList = this.props.todo.toDoList;
+        const selectedFilterValue = this.props.todo.selectedFilterValue
+        if(selectedFilterValue === filterNames.COMPLETED) {
+            newToDoList = newToDoList.filter(toDo => toDo.checked)
+        } else if(selectedFilterValue === filterNames.PENDING) {
+            newToDoList = newToDoList.filter(toDo => !toDo.checked)
+        } else if(selectedFilterValue === filterNames.PAST_DUES) {
+            newToDoList = newToDoList.filter(toDo => utilities.isPastDueToDo(toDo))
+        }
+        return newToDoList;
+    }
+
     renderNewInput = () => {
         if(this.props.todo.showNewToDo || this.props.todo.showEditToDo){
             return<AddEditToDo addToDo={this.addToDo}/> 
@@ -45,7 +60,7 @@ class ToDoList extends Component {
     }
     
     getToDoComp = () => {
-        const neweList = this.props.todo.toDoList.map((toDo) => {
+        const neweList = this.getFilteredToDo().map((toDo) => {
             return (
                 <ToDo 
                     key={`todo_${toDo.id}`}

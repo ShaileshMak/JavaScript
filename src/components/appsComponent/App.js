@@ -4,6 +4,7 @@ import ToDoList from '../toDoListComponent/ToDoList';
 import { Provider } from 'react-redux';
 import store from '../../store'
 import ToDoStatusCount from '../toDoStatusCount/ToDoStatusCount';
+import Filters from '../filters/Filters';
 
 function App() {
   return (
@@ -11,7 +12,10 @@ function App() {
       <div className="App">
         <header className="App-header">
           <h1> TO DO List</h1>
-          <ToDoStatusCount />
+          <div className="header">
+            <ToDoStatusCount className="todo-status"/>
+            <Filters className="filters"/>
+          </div>
           <ToDoList />
         </header>
       </div>

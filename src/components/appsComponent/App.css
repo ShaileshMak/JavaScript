@@ -18,3 +18,15 @@ h1 {
 .App-link {
   color: #09d3ac;
 }
+
+.header {
+  display: inline-block; 
+  width: 100%;
+}
+.filters {
+  float: right;
+  margin-right: 25px;
+}
+.todo-status {
+  float: left;
+}

@@ -1,4 +1,14 @@
-import {GET_TODOS, GET_TODOS_STATUS_COUNT, SHOW_TODOS_STATUS_COUNT, NEW_TODO, ADD_TODO, DELETE_TODO, EDIT_TODO, EDITED_TODO, MARK_DONE_TODO} from './types';
+import { 
+    GET_TODOS, 
+    GET_TODOS_STATUS_COUNT, 
+    SHOW_TODOS_STATUS_COUNT, 
+    NEW_TODO, ADD_TODO, 
+    DELETE_TODO, 
+    EDIT_TODO, 
+    EDITED_TODO, 
+    MARK_DONE_TODO,
+    FILTER_TODO
+} from './types';
 
 export const getTodos = () => {
     return {
@@ -24,38 +34,45 @@ export const showNewToDoForm = () => {
     }
 }
 
-export const addToDo = (data) => {
+export const addToDo = data => {
     return {
         type: ADD_TODO,
         payLoad: data
     }
 }
 
-export const deleteToDo = (id) => {
+export const deleteToDo = id => {
     return {
         type: DELETE_TODO,
         payLoad: id
     }
 }
 
-export const editToDo = (id) => {
+export const editToDo = id => {
     return {
         type: EDIT_TODO,
         payLoad: id
     }
 }
 
-export const editedToDo = (data) => {
+export const editedToDo = data => {
     return {
         type: EDITED_TODO,
         payLoad: data
     }
 }
 
-export const markToDoDone = (id) => {
+export const markToDoDone = id => {
     return {
         type: MARK_DONE_TODO,
         payLoad: id
+    }
+}
+
+export const filterToDo = data => {
+    return {
+        type: FILTER_TODO,
+        payLoad: data
     }
 }
 
