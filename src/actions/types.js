@@ -7,3 +7,4 @@ export const DELETE_TODO = 'DELETE_TODO';
 export const EDITED_TODO = 'EDITED_TODO';
 export const MARK_DONE_TODO = 'MARK_DONE_TODO';
 export const FILTER_TODO = 'FILTER_TODO';
+export const ORDER_TODO = 'ORDER_TODO';

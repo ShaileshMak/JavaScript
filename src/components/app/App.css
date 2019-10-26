@@ -26,6 +26,7 @@ h1 {
 .filters {
   float: right;
   margin-right: 25px;
+  margin-bottom: 10px;
 }
 .todo-status {
   float: left;

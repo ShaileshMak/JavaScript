@@ -8,6 +8,7 @@ import { filterNames } from '../../utilities/constants';
 import { getTodos, deleteToDo, markToDoDone, getToDosStatusCount } from '../../actions/todoActions';
 import PropTypes from 'prop-types';
 import { Link} from 'react-router-dom';
+import Ordering from '../ordering/Ordering';
 
 class ToDoList extends Component {
     
@@ -61,7 +62,7 @@ class ToDoList extends Component {
             )
         })
 
-        return neweList;
+        return neweList.length > 0 ? neweList : (<span>There are no To Do's Set for this filter. Add new to do by clicking 'New To Do' button.</span>);
     }
 
     render() {
@@ -69,6 +70,7 @@ class ToDoList extends Component {
             <div>
                 <div className="header">
                     <ToDoStatusCount className="todo-status"/>
+                    <Ordering className="filters" />
                     <Filters className="filters"/>
             </div>
                 <ol>

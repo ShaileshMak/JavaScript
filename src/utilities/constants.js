@@ -18,3 +18,17 @@ export const filterNames = {
     PENDING: 'PENDING', 
     PAST_DUES: 'PAST_DUES'
 }
+
+export const orderingOptions = [
+    {label: 'Ascending', value:'ASCENDING'},
+    {label: 'Deescending', value:'DESCENDING'},
+    {label: 'Latest', value:'LATEST'},
+    {label: 'Oldest', value:'OLDEST'}
+]
+
+export const orderingName = {
+    ASCENDING: 'ASCENDING', 
+    DESCENDING: 'DESCENDING', 
+    LATEST: 'LATEST', 
+    OLDEST: 'OLDEST'
+}
