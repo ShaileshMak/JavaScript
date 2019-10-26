@@ -1,0 +1,42 @@
+.App {
+  margin: 20px;
+}
+
+h1 {
+  font-size: 50px;
+}
+
+.App-logo {
+  height: 40vmin;
+}
+
+.App-header {
+  min-height: 100vh;
+  font-size: calc(10px + 2vmin);
+}
+
+.App-link {
+  color: #09d3ac;
+}
+
+.header {
+  display: inline-block; 
+  width: 100%;
+}
+.filters {
+  float: right;
+  margin-right: 25px;
+}
+.todo-status {
+  float: left;
+}
+.btn {
+  background-color: white;
+  border: 1px darkgray solid;
+  border-radius: 5px;
+  font-size: 15px;
+  color: gray;
+  padding: 10px 25px;
+  margin: 20px 10px;
+  text-decoration: none;
+}

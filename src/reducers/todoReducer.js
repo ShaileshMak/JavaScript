@@ -1,6 +1,16 @@
-import {GET_TODOS, GET_TODOS_STATUS_COUNT, SHOW_TODOS_STATUS_COUNT, NEW_TODO, ADD_TODO, DELETE_TODO, EDIT_TODO, EDITED_TODO, MARK_DONE_TODO} from '../actions/types';
+import { 
+    GET_TODOS, 
+    GET_TODOS_STATUS_COUNT, 
+    SHOW_TODOS_STATUS_COUNT, 
+    NEW_TODO, ADD_TODO, 
+    DELETE_TODO, 
+    EDITED_TODO, 
+    MARK_DONE_TODO,
+    FILTER_TODO
+} from '../actions/types';
 import uuid from 'uuid';
 import { utilities } from '../utilities/utils';
+import { filterNames } from '../utilities/constants';
 
 const initialToDoList = [
     {name: 'Todo 1', id: uuid(), targetDate: '2019-10-30', checked: false},
@@ -8,13 +18,15 @@ const initialToDoList = [
     {name: 'Todo 3', id: uuid(), targetDate: '2019-10-28', checked: true},
     {name: 'Movie Show', id: uuid(), targetDate: '2019-11-02', checked: false}
 ];
+
 const initialState = {
     toDoList: initialToDoList,
     showNewToDo: false,
     showEditToDo: false,
     toDoStatusCount: getToDosStatusCount(),
     showStatus: false,
-    idOfEdit: -1
+    idOfEdit: -1,
+    selectedFilterValue: filterNames.ALL
 }
 
 function getToDosStatusCount(toDoList = initialToDoList) {
@@ -31,7 +43,9 @@ export default function(state = initialState, action) {
     switch (action.type) {
         case GET_TODOS: 
             return {
-                ...state
+                ...state,
+                showNewToDo: false,
+                showEditToDo: false
             }
         case GET_TODOS_STATUS_COUNT: 
             return {
@@ -67,14 +81,8 @@ export default function(state = initialState, action) {
                 ...state,
                 toDoList: state.toDoList.filter(toDo => toDo.id !== action.payLoad)
             }
-        case EDIT_TODO:
-            return {
-                ...state,
-                showEditToDo: true,
-                idOfEdit: action.payLoad
-            }
         case EDITED_TODO:
-            const index = state.toDoList.findIndex(todo => todo.id === state.idOfEdit);
+            const index = state.toDoList.findIndex(todo => todo.id === action.payLoad.idOfEdit);
             const editedToDo = state.toDoList[index];
             editedToDo.name = action.payLoad.toDoValue;
             editedToDo.targetDate = action.payLoad.targetDate;
@@ -92,6 +100,11 @@ export default function(state = initialState, action) {
                     ...todo, 
                     checked: action.payLoad === todo.id ? !todo.checked : todo.checked 
                 }))
+            }
+        case FILTER_TODO: 
+            return {
+                ...state,
+                selectedFilterValue: action.payLoad
             }
         default:
             return state
