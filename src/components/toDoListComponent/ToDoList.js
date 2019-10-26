@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
 import "./ToDoList.css";
+import ToDoStatusCount from '../toDoStatusCount/ToDoStatusCount';
+import Filters from '../filters/Filters';
 import ToDo from '../toDo/ToDo';
-import AddEditToDo from '../addEditToDo/AddEditToDo';
 import { connect } from 'react-redux';
 import { utilities } from '../../utilities/utils';
 import { filterNames } from '../../utilities/constants';
-import { getTodos, showNewToDoForm, deleteToDo, editToDo, markToDoDone, getToDosStatusCount } from '../../actions/todoActions';
-import PropTypes from 'prop-types'
+import { getTodos, deleteToDo, markToDoDone, getToDosStatusCount } from '../../actions/todoActions';
+import PropTypes from 'prop-types';
+import { Link} from 'react-router-dom';
 
 class ToDoList extends Component {
+    
     componentDidMount() {
         this.props.getTodos();
     }
@@ -21,14 +24,6 @@ class ToDoList extends Component {
     deleteToDo = (id) => {
         this.props.deleteToDo(id);
         this.props.getToDosStatusCount();
-    }
-
-    editToDo = (id) => {
-        this.props.editToDo(id);
-    }
-
-    showNewToDoForm = () => {
-        this.props.showNewToDoForm();
     }
 
     getFilteredToDo = () => {
@@ -45,16 +40,9 @@ class ToDoList extends Component {
     }
 
     renderNewInput = () => {
-        if(this.props.todo.showNewToDo || this.props.todo.showEditToDo){
-            return<AddEditToDo addToDo={this.addToDo}/> 
-        } else {
+        if(!this.props.todo.showNewToDo) {
             return (
-                <button 
-                    className="add-button" 
-                    onClick={this.showNewToDoForm}
-                >
-                    New To Do 
-                </button>
+                <Link to="/addToDo" className="btn">New To Do </Link>
             )
         }
     }
@@ -70,9 +58,7 @@ class ToDoList extends Component {
                     checked={toDo.checked}
                     onChange={this.onChange.bind(this,toDo.id)}
                     deleteToDo={this.deleteToDo.bind(this,toDo.id)}
-                    editToDo={this.editToDo.bind(this,toDo.id)}
-                    >
-                </ToDo>
+                />
             )
         })
 
@@ -82,6 +68,10 @@ class ToDoList extends Component {
     render() {
         return (
             <div>
+                <div className="header">
+                    <ToDoStatusCount className="todo-status"/>
+                    <Filters className="filters"/>
+            </div>
                 <ol>
                     {this.getToDoComp()}
                 </ol>
@@ -93,9 +83,7 @@ class ToDoList extends Component {
 
 ToDoList.propTypes = {
     getTodos: PropTypes.func.isRequired,
-    showNewToDoForm: PropTypes.func.isRequired,
     deleteToDo: PropTypes.func.isRequired,
-    editToDo: PropTypes.func.isRequired,
     markToDoDone: PropTypes.func.isRequired,
     getToDosStatusCount: PropTypes.func.isRequired,
     todo: PropTypes.object.isRequired
@@ -109,9 +97,7 @@ export default connect(
     mapStateToProps, 
     { 
         getTodos,  
-        showNewToDoForm,
         deleteToDo,
-        editToDo,
         markToDoDone,
         getToDosStatusCount
     }

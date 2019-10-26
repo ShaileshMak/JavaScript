@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import "./AddEditToDo.css";
 import { connect } from 'react-redux';
-import { addToDo, editedToDo, getToDosStatusCount } from '../../actions/todoActions';
+import { addToDo, showNewToDoForm, editedToDo, getToDosStatusCount } from '../../actions/todoActions';
 import PropTypes from 'prop-types'
 
 class AddEditToDo extends Component {
@@ -10,19 +10,26 @@ class AddEditToDo extends Component {
 
         this.state = {
             toDoValue: '',
-            targetDate: this.getDate()
+            targetDate: this.getDate(),
+            isEditFlow: false,
+            idOfEdit: -1
         }
     }
 
     componentDidMount() {
-        if(this.props.todo.showEditToDo) {
-            const id = this.props.todo.idOfEdit;
+        const { id } = this.props.match.params;
+        this.setState({
+            isEditFlow: !!id,
+            idOfEdit: id || -1
+        })
+        if(id) {
             const todoToEdit = this.props.todo.toDoList.filter(toDo => toDo.id === id)[0];
             this.setState( {
                 toDoValue: todoToEdit.name,
                 targetDate: todoToEdit.targetDate
             })
-        }
+        } 
+        this.props.showNewToDoForm();
     }
     
     getDate = (date = new Date()) => {
@@ -40,15 +47,16 @@ class AddEditToDo extends Component {
 
     onSubmit = (event) =>  {
         event.preventDefault();
-        const isEditFlow = this.props.todo.showEditToDo
         const toDoData = {
             toDoValue: this.state.toDoValue,
             targetDate: this.state.targetDate,
+            idOfEdit: this.state.idOfEdit
         };
-        isEditFlow ? 
+        this.state.isEditFlow ? 
             this.props.editedToDo(toDoData): 
             this.props.addToDo(toDoData);
         this.props.getToDosStatusCount();
+        this.props.history.push('/');
     }
 
     render() {
@@ -74,6 +82,7 @@ class AddEditToDo extends Component {
 
 AddEditToDo.propTypes = {
     addToDo: PropTypes.func.isRequired,
+    showNewToDoForm: PropTypes.func.isRequired,
     editedToDo: PropTypes.func.isRequired,
     getToDosStatusCount: PropTypes.func.isRequired,
     todo: PropTypes.object.isRequired
@@ -87,6 +96,7 @@ export default connect(mapStateToProps,
     { 
         addToDo,
         editedToDo,
+        showNewToDoForm,
         getToDosStatusCount
     }
 )(AddEditToDo)

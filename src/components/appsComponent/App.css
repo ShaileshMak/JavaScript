@@ -1,5 +1,5 @@
 .App {
-  margin-left: 20px;
+  margin: 20px;
 }
 
 h1 {
@@ -29,4 +29,14 @@ h1 {
 }
 .todo-status {
   float: left;
+}
+.btn {
+  background-color: white;
+  border: 1px darkgray solid;
+  border-radius: 5px;
+  font-size: 15px;
+  color: gray;
+  padding: 10px 25px;
+  margin: 20px 10px;
+  text-decoration: none;
 }

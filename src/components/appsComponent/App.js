@@ -1,10 +1,12 @@
 import React from 'react';
 import './App.css';
-import ToDoList from '../toDoListComponent/ToDoList';
 import { Provider } from 'react-redux';
-import store from '../../store'
-import ToDoStatusCount from '../toDoStatusCount/ToDoStatusCount';
-import Filters from '../filters/Filters';
+import store from '../../store';
+
+import ToDoList from '../toDoListComponent/ToDoList';
+import AddEditToDo from '../addEditToDo/AddEditToDo';
+
+import { Route, BrowserRouter as Router } from 'react-router-dom';
 
 function App() {
   return (
@@ -12,11 +14,11 @@ function App() {
       <div className="App">
         <header className="App-header">
           <h1> TO DO List</h1>
-          <div className="header">
-            <ToDoStatusCount className="todo-status"/>
-            <Filters className="filters"/>
-          </div>
-          <ToDoList />
+          <Router>
+            <Route exact path="/" component={ToDoList} />
+            <Route exact path="/addToDo" component={AddEditToDo} />
+            <Route exact path="/editToDo/:id" component={AddEditToDo} />
+          </Router>
         </header>
       </div>
     </Provider>

@@ -4,7 +4,6 @@ import {
     SHOW_TODOS_STATUS_COUNT, 
     NEW_TODO, ADD_TODO, 
     DELETE_TODO, 
-    EDIT_TODO, 
     EDITED_TODO, 
     MARK_DONE_TODO,
     FILTER_TODO
@@ -44,7 +43,9 @@ export default function(state = initialState, action) {
     switch (action.type) {
         case GET_TODOS: 
             return {
-                ...state
+                ...state,
+                showNewToDo: false,
+                showEditToDo: false
             }
         case GET_TODOS_STATUS_COUNT: 
             return {
@@ -80,14 +81,8 @@ export default function(state = initialState, action) {
                 ...state,
                 toDoList: state.toDoList.filter(toDo => toDo.id !== action.payLoad)
             }
-        case EDIT_TODO:
-            return {
-                ...state,
-                showEditToDo: true,
-                idOfEdit: action.payLoad
-            }
         case EDITED_TODO:
-            const index = state.toDoList.findIndex(todo => todo.id === state.idOfEdit);
+            const index = state.toDoList.findIndex(todo => todo.id === action.payLoad.idOfEdit);
             const editedToDo = state.toDoList[index];
             editedToDo.name = action.payLoad.toDoValue;
             editedToDo.targetDate = action.payLoad.targetDate;

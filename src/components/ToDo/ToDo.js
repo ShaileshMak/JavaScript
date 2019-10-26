@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import "./ToDo.css"
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { Link} from 'react-router-dom';
 
 class ToDo extends Component {
 
@@ -32,11 +35,18 @@ class ToDo extends Component {
                 </div>
                 <div>
                     <button className="delete-button" onClick={() => this.props.deleteToDo(this.props.id)}>Delete</button>
-                    <button className="delete-button" onClick={() => this.props.editToDo(this.props.id)}>Edit</button>
+                    <Link to={`/editToDo/${this.props.id}`} className="btn edit-button">Edit</Link>
                 </div>
             </div>
         )
     }
 }
+ToDo.propTypes = {
+    todo: PropTypes.object.isRequired
+}
 
-export default ToDo
+const mapStateToProps = (state) => ({
+    todo: state.todo
+})
+
+export default connect(mapStateToProps)(ToDo)

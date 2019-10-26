@@ -4,7 +4,6 @@ import {
     SHOW_TODOS_STATUS_COUNT, 
     NEW_TODO, ADD_TODO, 
     DELETE_TODO, 
-    EDIT_TODO, 
     EDITED_TODO, 
     MARK_DONE_TODO,
     FILTER_TODO
@@ -44,13 +43,6 @@ export const addToDo = data => {
 export const deleteToDo = id => {
     return {
         type: DELETE_TODO,
-        payLoad: id
-    }
-}
-
-export const editToDo = id => {
-    return {
-        type: EDIT_TODO,
         payLoad: id
     }
 }

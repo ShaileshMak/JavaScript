@@ -4,7 +4,6 @@ export const SHOW_TODOS_STATUS_COUNT = "SHOW_TODOS_STATUS_COUNT";
 export const NEW_TODO = 'NEW_TODO';
 export const ADD_TODO = 'ADD_TODO';
 export const DELETE_TODO = 'DELETE_TODO';
-export const EDIT_TODO = 'EDIT_TODO';
 export const EDITED_TODO = 'EDITED_TODO';
 export const MARK_DONE_TODO = 'MARK_DONE_TODO';
 export const FILTER_TODO = 'FILTER_TODO';
