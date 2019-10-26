@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import "./ToDoList.css";
 import ToDoStatusCount from '../toDoStatusCount/ToDoStatusCount';
 import Filters from '../filters/Filters';
 import ToDo from '../toDo/ToDo';

@@ -3,7 +3,7 @@ import './App.css';
 import { Provider } from 'react-redux';
 import store from '../../store';
 
-import ToDoList from '../toDoListComponent/ToDoList';
+import ToDoList from '../toDoList/ToDoList';
 import AddEditToDo from '../addEditToDo/AddEditToDo';
 
 import { Route, BrowserRouter as Router } from 'react-router-dom';
