@@ -6,7 +6,8 @@ import {
     DELETE_TODO, 
     EDITED_TODO, 
     MARK_DONE_TODO,
-    FILTER_TODO
+    FILTER_TODO,
+    ORDER_TODO
 } from './types';
 
 export const getTodos = () => {
@@ -64,6 +65,13 @@ export const markToDoDone = id => {
 export const filterToDo = data => {
     return {
         type: FILTER_TODO,
+        payLoad: data
+    }
+}
+
+export const orderToDo = data => {
+    return {
+        type: ORDER_TODO,
         payLoad: data
     }
 }
